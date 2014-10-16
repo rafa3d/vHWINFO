@@ -117,8 +117,11 @@ echo -e " SO:\t\t "${soalt:13} $bits
 else
 
 so=`cat /etc/issue`
+
 pos=`expr index "$so" 123456789`
+
 so=${so/\/}
+
 
 extra=""
 
@@ -150,7 +153,7 @@ fi
 
 
 
-echo -e " SO:\t\t "${so:0:($pos)} $extra$bits
+echo -e " SO:\t\t "${so:0:($pos+2)} $extra$bits
 
 
 fi
@@ -182,7 +185,7 @@ then
 virtual="VMware"
 fi
 
-if [[ "$virtualx" == *Parallels* ]]; 
+if [[ "$virtualx" == *"Parallels Software International"* ]]; 
 then
 virtual="Parallels"
 fi
