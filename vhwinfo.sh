@@ -180,7 +180,7 @@ then
 virtual="KVM"
 fi
 
-if [[ "$virtualx" == *VMware* ]]; 
+if [[ "$virtualx" == *"VMware Virtual Platform"* ]]; 
 then
 virtual="VMware"
 fi
