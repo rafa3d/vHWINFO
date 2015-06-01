@@ -20,7 +20,7 @@ echo "   /\   /  \___\    _   _ / / / / |     / /  _/ | / / ____/ __ \ ";
 echo "  /  \  \  /   /   | | / / /_/ /| | /| / // //  |/ / /_  / / / / ";
 echo " /    \  \/___/ \  | |/ / __  / | |/ |/ // // /|  / __/ / /_/ /  ";
 echo "/      \_________\ |___/_/ /_/  |__/|__/___/_/ |_/_/    \____/   ";
-echo "\      /         / vHWINFO 1.0 Oct 2014 | https://vhwinfo.com    ";
+echo "\      /         / vHWINFO 1.1 May 2015 | https://vhwinfo.com    ";
 echo " ";
 
 
@@ -302,15 +302,23 @@ fi
 
 
 
+hdspeed=`dd if=/dev/zero of=ddfile bs=16k count=12190 2>&1`
+sync
+rm -rf ddfile
+hdspeed1=" / inkling speed "`echo $hdspeed | grep "s, " | awk '{print $14}'`
+hdspeed2=`echo $hdspeed | grep "s, " | awk '{print $15}'`
+
 if (($used>0)) 
 then
-echo -e " HD:\t\t "$total "("$label1$used"% used"$label2")"
+echo -e " HD:\t\t "$total "("$label1$used"% used"$label2")"$hdspeed1 $hdspeed2
 else
-echo -e " HD:\t\t (\e[43mMultiple partitions to check not allowed yet\e[0m)"
+echo -e " HD:\t\t (\e[43mMultiple partitions to check not allowed yet\e[0m)"$hdspeed1 $hdspeed2
 fi
 
 
-speed="`wget -O /dev/null http://cachefly.cachefly.net/1mb.test 2>&1 | grep '\([0-9.]\+ [KM]B/s\)'`"
+
+
+speed="`wget -O /dev/null http://cachefly.cachefly.net/10mb.test 2>&1 | grep '\([0-9.]\+ [KM]B/s\)'`"
 pos=`expr index "$speed" "s"`
 
 unidad=${speed:($pos-4):4}
@@ -335,7 +343,7 @@ fi
 
 fi
 
-echo -e " cachefly 1MB:\t "$speed $unidad $extra
+echo -e " cachefly 10MB:\t "$speed $unidad $extra
 
 
 fi
