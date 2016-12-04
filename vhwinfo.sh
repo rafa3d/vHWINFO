@@ -1,8 +1,8 @@
 ###############################################################################################
 # vHWINFO - Get information about your virtual (or non) server                                #
 # vHWINFO 1.0 Oct 2014                                                                        #
-# Author: Rafa Marruedo <webmaster@vhwinfo.com>                                               #
-# URL: https://vhwinfo.com/                                                                   #
+# Author: Rafa Marruedo <webmaster@vhwinfo.tk>                                               #
+# URL: https://vhwinfo.tk/                                                                   #
 ###############################################################################################
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY. YOU USE AT YOUR OWN RISK. THE AUTHOR
@@ -20,7 +20,7 @@ echo "   /\   /  \___\    _   _ / / / / |     / /  _/ | / / ____/ __ \ ";
 echo "  /  \  \  /   /   | | / / /_/ /| | /| / // //  |/ / /_  / / / / ";
 echo " /    \  \/___/ \  | |/ / __  / | |/ |/ // // /|  / __/ / /_/ /  ";
 echo "/      \_________\ |___/_/ /_/  |__/|__/___/_/ |_/_/    \____/   ";
-echo "\      /         / vHWINFO 1.1 May 2015 | https://vhwinfo.com    ";
+echo "\      /         / vHWINFO 1.1 May 2015 | https://vhwinfo.tk     ";
 echo " ";
 
 
@@ -34,7 +34,7 @@ echo -e -n " hostname:\t "`hostname`.`dnsdomainname`
 fi
 
 
-ip=`wget -qO- --no-check-certificate http://vhwinfo.com/ipecho.php`
+ip=`wget -qO- --no-check-certificate http://vhwinfo.tk/ipecho.php`
 echo " (public ip "$ip")"
 
 
