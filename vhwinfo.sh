@@ -28,13 +28,19 @@ echo " ";
 hostname=`hostname`
 if [[ "$hostname" == *.* ]]
 then
-echo -e -n " hostname:\t "`hostname`
+echo -e -n " hostname:\t $hostname"
 else
-echo -e -n " hostname:\t "`hostname`.`dnsdomainname`
+
+dnsdomainname=`dnsdomainname &> /dev/null`
+if [ -z "$dnsdomainname" ]
+then
+echo -e -n " hostname:\t $hostname"
+else
+echo -e -n " hostname:\t $hostname.$dnsdomainname"
+fi
 fi
 
-
-ip=`wget -qO- --no-check-certificate http://vhwinfo.tk/ipecho.php`
+ip=`dig +short myip.opendns.com @resolver1.opendns.com`
 echo " (public ip "$ip")"
 
 
@@ -136,6 +142,16 @@ then
 extra="(wheezy)"
 fi
 
+if [[ "$so" == Debian*8* ]]; 
+then
+extra="(jessie)"
+fi
+
+if [[ "$so" == Debian*9* ]]; 
+then
+extra="(stretch)"
+fi
+
 if [[ "$so" == *Proxmox* ]]; 
 then
 so="Debian 7.6 (wheezy)";
@@ -195,7 +211,10 @@ then
 virtual="VirtualBox"
 fi
 
-
+if [[ `dmidecode | egrep -i 'manufacturer|product'` == *"Microsoft Corporation"*"Virtual Machine"* ]];
+then
+virtual="Hyper-V"
+fi
 
 else
 
@@ -210,7 +229,6 @@ if [ -e /proc/xen ]
 then
 virtual="Xen"
 fi
-
 
 
 echo -e " virtual:\t "$virtual
