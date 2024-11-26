@@ -33,10 +33,8 @@ else
 echo -e -n " hostname:\t "`hostname`.`dnsdomainname`
 fi
 
-
-ip=`wget -qO- --no-check-certificate http://vhwinfo.tk/ipecho.php`
+ip=$(curl -4 -s ifconfig.me)
 echo " (public ip "$ip")"
-
 
 if hash sw_vers 2>/dev/null; then
 
