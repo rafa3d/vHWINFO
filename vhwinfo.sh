@@ -1,7 +1,7 @@
 #!/bin/bash
 ###############################################################################################
 # vHWINFO - Get information about your virtual (or non) server                                #
-# vHWINFO 2.0 Jul 2026                                                                        #
+# vHWINFO 2.0 July 2026                                                                       #
 # Author: Rafa Marruedo                                                                       #
 ###############################################################################################
 # This program is distributed in the hope that it will be useful,
@@ -15,7 +15,7 @@ echo "   /\   /  \___\    _   _ / / / / |     / /  _/ | / / ____/ __ \ ";
 echo "  /  \  \  /   /   | | / / /_/ /| | /| / // //  |/ / /_  / / / / ";
 echo " /    \  \/___/ \  | |/ / __  / | |/ |/ // // /|  / __/ / /_/ /  ";
 echo "/      \_________\ |___/_/ /_/  |__/|__/___/_/ |_/_/    \____/   ";
-echo "\      /         / vHWINFO 2.0 Jul 2026                          ";
+echo "\      /         / vHWINFO 2.0 July 2026                        ";
 echo " ";
 
 # --------------------- HOSTNAME & IP ---------------------
@@ -69,8 +69,21 @@ if hash sw_vers 2>/dev/null; then
     fi
     echo -e " RAM:\t\t $ram MB ($used% used)"
 
-    hd=$(diskutil info /dev/disk0 2>/dev/null | grep 'Total Size:' | awk -F':' '{print $2}' | awk '{print $1}')
-    echo -e " HD:\t\t $hd GB"
+    # Disco Duro en Mac (usando df para mayor compatibilidad)
+    disk_info=$(df -h / 2>/dev/null | awk 'NR==2 {print $2, $5}')
+    total=$(echo "$disk_info" | awk '{print $1}')
+    used=$(echo "$disk_info" | awk '{print $2}')
+    used="${used//%}"
+
+    label1=""; label2=""
+    if [[ -n "$used" ]]; then
+        if [[ $used -gt 90 ]]; then
+            label1="\e[41m"; label2="\e[0m"
+        elif [[ $used -gt 75 ]]; then
+            label1="\e[43m"; label2="\e[0m"
+        fi
+    fi
+    echo -e " HD:\t\t $total ($label1$used% used$label2)"
 
     # Velocidad de red usando curl
     speed_bps=$(curl -s -o /dev/null -w '%{speed_download}' http://cachefly.cachefly.net/1mb.test 2>/dev/null)
@@ -184,9 +197,10 @@ else
 
     echo -e " RAM:\t\t $ram MB ($label1$busy% used$label2) / swap $swap MB ($busy_swap% used)"
 
-    # Disco Duro
-    total=$(df -h --total 2>/dev/null | grep 'total' | awk '{print $2}')
-    used=$(df -h --total 2>/dev/null | grep 'total' | awk '{print $5}')
+    # Disco Duro en Linux (usando partición raíz para evitar sumar tmpfs)
+    disk_info=$(df -h / 2>/dev/null | awk 'NR==2 {print $2, $5}')
+    total=$(echo "$disk_info" | awk '{print $1}')
+    used=$(echo "$disk_info" | awk '{print $2}')
     used="${used//%}"
 
     label1=""; label2=""
