@@ -24,3 +24,4 @@ Or run it in one line without saving:
 ```bash
 curl -sSL https://raw.githubusercontent.com/rafa3d/vHWINFO/refs/heads/master/vhwinfo.sh | bash
 ```
+![vHWINFO screenshot](vhwinfo_capture.png)
